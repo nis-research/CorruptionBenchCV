@@ -1,0 +1,9 @@
+cv2
+torch
+torchvision
+Pillow
+argparse
+timm
+scipy
+os
+pandas

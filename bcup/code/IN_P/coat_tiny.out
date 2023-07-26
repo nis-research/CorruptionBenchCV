@@ -1,0 +1,14 @@
+2
+mFP: 60.70
+mT5D: 82.77
+       Corruption        FP       T5D
+0      brightness  0.022687  0.943799
+1  gaussian_noise  0.100197  3.367686
+2     motion_blur  0.042863  1.375229
+3          rotate  0.056366  2.027481
+4           scale  0.089970  2.718827
+5      shot_noise  0.112385  3.616927
+6            snow  0.043628  1.841075
+7            tilt  0.035277  1.395049
+8       translate  0.039841  1.583034
+9       zoom_blur  0.040433  1.244492

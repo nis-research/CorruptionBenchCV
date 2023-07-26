@@ -1,0 +1,18 @@
+2
+Average accuracy test: 29.16
+Average accuracy baseline: 18.57
+Relative Robustness 10.597
+mCE: 87.02
+                   Corruption  Acc_s1  Acc_s2  ...    ECE_s3    ECE_s4    ECE_s5
+0           blue_noise_sample  77.158  37.380  ...  0.196354  0.132861  0.223170
+1              brownish_noise  79.910  38.889  ...  0.299297  0.467519  0.368287
+2          caustic_refraction  76.026  36.735  ...  0.227068  0.331610  0.219014
+3         checkerboard_cutout  77.700  37.775  ...  0.291376  0.327232  0.265614
+4        cocentric_sine_waves  61.926  18.202  ...  0.511934  0.688742  0.501328
+5            inverse_sparkles  55.858  24.340  ...  0.230408  0.272776  0.278079
+6                perlin_noise  78.030  38.601  ...  0.300859  0.241753  0.257169
+7                plasma_noise  70.056  27.579  ...  0.319632  0.265646  0.285943
+8  single_frequency_greyscale  66.786  28.376  ...  0.325050  0.407504  0.417345
+9                    sparkles  80.390  39.594  ...  0.298248  0.339561  0.340984
+
+[10 rows x 11 columns]
