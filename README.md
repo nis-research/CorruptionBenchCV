@@ -25,7 +25,16 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
  ``` 
  python main.py --model resnet18  --dataset ImageNet_C_bar --image_size 224 --data_path /whereYouStoreImageNet_C_bar/
  ```
+
+|Corruption|	Acc_s1|	Acc_s2	|Acc_s3	|Acc_s4| Acc_s5	|ECE_s1	|ECE_s2|	ECE_s3|	ECE_s4|	ECE_s5|
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+|blue_noise_sample	|   |   |   |   |   |   |   |   |   |   |
+
+
 Outputs:
+
+
+
 |Corruption|	Acc_s1|	Acc_s2	|Acc_s3	|Acc_s4| Acc_s5	|ECE_s1	|ECE_s2|	ECE_s3|	ECE_s4|	ECE_s5|
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 |blue_noise_sample	| | | | | | | | | | |
