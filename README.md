@@ -1,24 +1,27 @@
-# BenchmarkSuiteRobustDL
-A benchmark suite for testing the robustness of deep learning models towards common image corruptions
+# Benchmark Suite for Evaluating Corruption Robustness of Computer Vision Models
+
 ---
 
 ## Introduction
  
+<p align="center"><img src="figures/teaser.png" width="500"></p>
+
+
 ### Folder structure 
 
   - Datasets
-    - [CIFAR10-C](https://zenodo.org/record/2535967#.Y-J1AxXMKUl)
     - [ImageNet-C](https://github.com/hendrycks/robustness)
     - [ImageNet-C-bar](https://github.com/facebookresearch/augmentation-corruption)
     - [ImageNet-P](https://github.com/hendrycks/robustness)
     - [ImageNet-3DCC](https://github.com/EPFL-VILAB/3DCommonCorruptions)
     - [ImageNet-D](not publically available yet)
-    - [ImageNet-Cartoon](https://zenodo.org/record/6801109#.Y-J1yBXMKUk)
-    - [ImageNet-Drawing](https://zenodo.org/record/6801109#.Y-J1yBXMKUk)
+   
   - metric.py
     - Accuracy (per corruption per severity) [For ImageNet - ALL]
     - Corruption Error (CE) [For ImageNet-C/-C-bar/-3DCC]
     - mCE [For ImageNet-C/-C-bar/-3DCC]
+    - mFP [For ImageNet-P]
+    - mT5D [For ImageNet-P]
     - Relative robustness [For ImageNet - ALL]
     - Expected callibration error (ECE) [For ImageNet - ALL]
   - test.py
