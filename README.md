@@ -10,8 +10,7 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
  Before running:
  
   * Download the datasets  
-  * Install libraries neccesary to load the model (e.g., folders *backbone* and *blocks*)
-  * Other libraries to install 
+  * Install packages
    ```
    pip install -r requirements.txt
    ```
@@ -19,14 +18,26 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
   
  Using your customize models:
  ``` 
- python main.py --ckpt model_path.ckpt --ckpt_baseline baseline_path.ckpt --dataset cifar > summary.out
- ```
+ python main.py --ckpt model_path.ckpt --ckpt_baseline baseline_path.ckpt --dataset cifar 
  
  or using pre-trained models from timm
  
  ``` 
- python main.py --model resnet18  --dataset ImageNet_C_bar --image_size 224 --data_path /whereYouStoreImageNet_C_bar/  > summary.out
+ python main.py --model resnet18  --dataset ImageNet_C_bar --image_size 224 --data_path /whereYouStoreImageNet_C_bar/
  ```
+Outputs:
+|Corruption|	Acc_s1|	Acc_s2	|Acc_s3	|Acc_s4| Acc_s5	|ECE_s1	|ECE_s2|	ECE_s3|	ECE_s4|	ECE_s5|
+|blue_noise_sample	| | | | | | | | | | |
+|brownish_noise|	 | | | | | | | | | |
+|caustic_refraction	| | | | | | | | | | |
+|checkerboard_cutout|	 | | | | | | | | | |
+|cocentric_sine_waves	| | | | | | | | | | |
+|inverse_sparkles	| | | | | | | | | | |
+|perlin_noise|	 | | | | | | | | | |
+|plasma_noise	| | | | | | | | | | |
+|single_frequency_greyscale	| | | | | | | | | | |
+|sparkles	| | | | | | | | | | |
+
  ---
  Notice: 
  * It is important to define the file name 'summary.out', because it saves the printed results of the datasets (e.g. mCE, mFP, ......).
