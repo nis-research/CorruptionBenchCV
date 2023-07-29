@@ -2,7 +2,9 @@ import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
 
-import pytorch_lightning as pl
+
+
+from pytorch_lightning.core.lightning import LightningModule
 import torchmetrics
 
 # from pytorch_lightning import metrics
@@ -11,14 +13,14 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 
 
-class Model(pl.LightningModule):
+class Model(LightningModule):
     def __init__(self,backbone_model, decoder, lr,num_class,weight_alpha,dataset,image_size, band, masks, p , special=None):
         super(Model, self).__init__()
         self.save_hyperparameters()
         self.lr = lr
-        self.train_acc = torchmetrics.Accuracy(task='multiclass', num_classes=10)
-        self.val_acc = torchmetrics.Accuracy(task='multiclass', num_classes=10)
-        self.test_acc = torchmetrics.Accuracy(task='multiclass', num_classes=10)
+        self.train_acc = torchmetrics.Accuracy()
+        self.val_acc = torchmetrics.Accuracy()
+        self.test_acc = torchmetrics.Accuracy()
         self.weight_alpha = weight_alpha
         self.dataset = dataset
         self.num_class = num_class

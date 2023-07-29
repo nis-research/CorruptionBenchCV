@@ -22,7 +22,7 @@ def main(args):
 
     # if model name from TIMM contains a "/"
     model_name_fileout = args.model.replace("/", "-")
-    model_name_fileout = model_name_fileout.replace(".", "")
+    #model_name_fileout = model_name_fileout.replace(".", "")
     if args.ckpt == None:
         model_test = timm.create_model(args.model, pretrained=True).to(device).eval()
         model_baseline = timm.create_model('resnet18', pretrained=True).to(device).eval()
@@ -74,11 +74,11 @@ def main(args):
 
         if not os.path.exists('results/summary' + args.dataset + '_' + model_name_fileout + '.csv'):
             d_test = test_perturbations(model_test, args.difficulty, args.dataset, args.data_path)
-            d_test.to_csv('summary' + args.dataset + '_' + model_name_fileout + '.csv')
+            d_test.to_csv('results/summary' + args.dataset + '_' + model_name_fileout + '.csv')
 
         if not os.path.exists('results/summary' + args.dataset + '_resnet18.csv'):
             d_baseline = test_perturbations(model_baseline, args.difficulty, args.dataset, args.data_path)
-            d_baseline.to_csv('summary' + args.dataset + '_resnet18.csv')
+            d_baseline.to_csv('results/summary' + args.dataset + '_resnet18.csv')
 
         from metric import get_mfp_mt5d
         mfp, mt5d = get_mfp_mt5d('results/summary' + args.dataset + '_' + model_name_fileout + '.csv',

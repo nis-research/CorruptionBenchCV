@@ -214,7 +214,8 @@ def test_ece_severity(dataset, image_size,model, corruption,data_path, num_sever
 
 
 def test_corruption(dataset, image_size,model_test,data_path):
-
+    acc_all_corruptions = []
+    ce_all_corruptions = []
     severity=5
 
     corruption_list = get_corruption_list(dataset)
@@ -224,12 +225,35 @@ def test_corruption(dataset, image_size,model_test,data_path):
     for corruption in corruption_list:
         acc_corruption_severity_test= test_corruption_severity(dataset, image_size,model_test, corruption,data_path)
         ece_severity_test = test_ece_severity(dataset, image_size,model_test, corruption,data_path)
+        acc_corruption =  sum(acc_corruption_severity_test)   
+        ce_corruption_test = [100 - r for r in acc_corruption_severity_test] 
         corruption_i = corruption_list.index(corruption)
+
+        # print(corruption+': (from severity  1 to 5)')        
+        # print('Accuracy per severity: test model' + str(acc_corruption_severity_test))
+        # print('Accuracy per severity: basleine' +str(acc_corruption_severity_baseline))
+   
+        # print('ECE per severity: test model' + str(ece_severity_test))
+        # print('ECE per severity: basleine' +str(ece_severity_baseline))
 
         for s in range(severity):
             d.loc[corruption_i,'Acc_s'+str(s+1)] = acc_corruption_severity_test[s]
             d.loc[corruption_i,'ECE_s'+str(s+1)] = ece_severity_test[s]
-     
+        # CE_corruption = CE(ce_corruption_test,ce_corruption_baseline)
+        # ce_all_corruptions.append(CE_corruption)
+        
+
+        # acc_all_corruptions.append(acc_corruption/5.0)
+        # acc_all_corruptions_baseline.append(sum(acc_corruption_severity_baseline)/5.0)
+    # avg_acc = sum(acc_all_corruptions)/len(acc_all_corruptions)
+    # avg_acc_baseline = sum(acc_all_corruptions_baseline)/len(acc_all_corruptions_baseline)
+
+    # print('Average accuracy test: %.2f' %avg_acc)
+    # print('Average accuracy baseline: %.2f' %avg_acc_baseline)
+    # relR = RelativeRobustness(avg_acc,avg_acc_baseline)
+    # print('Relative Robustness %.3f' %relR)
+    # mCE_final = mCE(ce_all_corruptions)
+    # print('mCE: %.2f' % mCE_final)
     print(d)
     
     return d
