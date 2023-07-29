@@ -16,19 +16,14 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
    ```
   
   
- Using your customize models:
- ``` 
- python main.py --ckpt model_path.ckpt --ckpt_baseline baseline_path.ckpt --dataset cifar 
- ```
-
- or using pre-trained models from timm
+ Evaluating pre-trained models from timm
  
  ``` 
  python main.py --model resnet18  --dataset ImageNet_C_bar --image_size 224 --data_path /whereYouStoreImageNet_C_bar/
  ```
 
-Output: a csv file with the following structure, recording the accuracy and ECE per corruption per severity.
-
+Output: a csv file with the following structure, recording the accuracy and ECE per corruption per severity and the overal results (e.g. clean accuracy, robust accuracy, relative robustness, relative mCE, mCE, mFP, and mT5D) will be printed. You can also use the csv file to compute the values of the above metrics.
+ 
 
 
 |Corruption|	Acc_s1|	Acc_s2	|Acc_s3	|Acc_s4| Acc_s5	|ECE_s1	|ECE_s2|	ECE_s3|	ECE_s4|	ECE_s5|
