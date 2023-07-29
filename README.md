@@ -7,7 +7,7 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
   
  ---
  ### Quick start
- Before running:
+1. Before running:
  
   * Download the datasets  
   * Install packages
@@ -16,13 +16,13 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
    ```
   
   
- Evaluating pre-trained models from timm
+2. Evaluating pre-trained models from [timm](https://huggingface.co/models?sort=downloads&search=bit)
  
  ``` 
  python main.py --model resnet18  --dataset ImageNet_C_bar --image_size 224 --data_path /whereYouStoreImageNet_C_bar/
  ```
 
-Output: a csv file with the following structure, recording the accuracy and ECE per corruption per severity and the overal results (e.g. clean accuracy, robust accuracy, relative robustness, relative mCE, mCE, mFP, and mT5D) will be printed. You can also use the csv file to compute the values of the above metrics.
+Output: a csv file with the following structure, recording the accuracy and ECE per corruption per severity. The overal results (e.g. clean accuracy, robust accuracy, relative robustness, relative mCE, mCE, mFP, and mT5D) will be printed. You can also use the csv file to compute the values of the above metrics.
  
 
 
@@ -41,32 +41,8 @@ Output: a csv file with the following structure, recording the accuracy and ECE 
 
  ---
  Notice: 
- * It is important to define the file name 'summary.out', because it saves the printed results of the datasets (e.g. mCE, mFP, ......).
- *  Change this parameter to select the pretrained model  '--model'
- * Copy datasets first, e.g. 
- ``` 
- cp -r /deepstore/datasets/dmb/ComputerVision/nis-data/shunxin/ImageNet_P/  /local/swang/
- ```
- ---
- 
- For testing on all benchmark datasets, it has high requirement of storage. Thus, we suggest testing on benchmark datasets one by one. 
+ *  Change this parameter to select the pretrained model available in [timm](https://huggingface.co/models?sort=downloads&search=bit)  '--model'
+ *  For testing on all benchmark datasets, it has high requirement of storage. Thus, we suggest testing on benchmark datasets one by one. 
 
-
-  - metric.py
-    - Accuracy (per corruption per severity) [For ImageNet - ALL]
-    - Corruption Error (CE) [For ImageNet-C/-C-bar/-3DCC]
-    - mCE [For ImageNet-C/-C-bar/-3DCC]
-    - mFP [For ImageNet-P]
-    - mT5D [For ImageNet-P]
-    - Relative robustness [For ImageNet - ALL]
-    - Expected callibration error (ECE) [For ImageNet - ALL]
-  - test.py
-    - load a dataset
-    - output test results
-  - main.py
-    - load a model (+ a baseline model)
-    - test a model on all datasets
-    - output a summary of test results
-  - notebook
-    - plot results based on summary
- 
+3. Comparing robustness among different backbones
+  
