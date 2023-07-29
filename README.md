@@ -6,7 +6,7 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
 <p align="center"><img src="figures/teaser.png" width="700"></p>
  
 
-Dashboard for benchmark results can be [accessed](http) here.
+* Dashboard for benchmark results can be [accessed](http) here.
 
  ---
  ### Quick start
