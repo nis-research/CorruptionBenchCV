@@ -28,16 +28,7 @@ Output: a csv file with the following structure, recording the accuracy and ECE 
 
 |Corruption|	Acc_s1|	Acc_s2	|Acc_s3	|Acc_s4| Acc_s5	|ECE_s1	|ECE_s2|	ECE_s3|	ECE_s4|	ECE_s5|
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-|blue_noise_sample	| | | | | | | | | | |
-|brownish_noise|	 | | | | | | | | | |
-|caustic_refraction	| | | | | | | | | | |
-|checkerboard_cutout|	 | | | | | | | | | |
-|cocentric_sine_waves	| | | | | | | | | | |
-|inverse_sparkles	| | | | | | | | | | |
-|perlin_noise|	 | | | | | | | | | |
-|plasma_noise	| | | | | | | | | | |
-|single_frequency_greyscale	| | | | | | | | | | |
-|sparkles	| | | | | | | | | | |
+| 	| | | | | | | | | | |
 
  ---
  Notice: 
