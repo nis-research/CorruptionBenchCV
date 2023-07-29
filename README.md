@@ -35,5 +35,5 @@ Output: a csv file with the following structure, recording the accuracy and ECE 
  *  Change this parameter to select the pretrained model available in [timm](https://huggingface.co/models?sort=downloads&search=bit)  '--model'
  *  For testing on all benchmark datasets, it has high requirement of storage. Thus, we suggest testing on benchmark datasets one by one. 
 
-3. Comparing robustness among different backbones
+3. Visualizing robustness among different backbones --> 
   
