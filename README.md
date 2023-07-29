@@ -4,7 +4,9 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
 
 
 <p align="center"><img src="figures/teaser.png" width="700"></p>
-  
+ 
+
+Dashboard for benchmark results can be [accessed](http) here/
  ---
  ### Quick start
 1. Before running:
@@ -35,5 +37,5 @@ Output: a csv file with the following structure, recording the accuracy and ECE 
  *  Change this parameter to select the pretrained model available in [timm](https://huggingface.co/models?sort=downloads&search=bit)  '--model'
  *  For testing on all benchmark datasets, it has high requirement of storage. Thus, we suggest testing on benchmark datasets one by one. 
 
-3. Visualizing robustness among different backbones --> [overall robustness](plot_benchmark_overall.ipynb),  [per corruption](plot_benchmark_per_corruption.ipynb)
+3. Visualizing robustness among different backbones --> [Overall robustness](plot_benchmark_overall.ipynb),  [Per corruption](plot_benchmark_per_corruption.ipynb)
   
