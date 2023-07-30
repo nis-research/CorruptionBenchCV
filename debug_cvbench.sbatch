@@ -2,6 +2,7 @@
 #SBATCH -J Training
 #SBATCH -c 2
 #SBATCH -p dmb
+#SBATCH --nodelist=ctit085
 #SBATCH --gres=gpu:1
 #SBATCH --mail-type=END,FAIL 
 #load modules
@@ -38,6 +39,7 @@ tar -xvf imagenet-val.tar.gz -o val
 rm imagenet-val.tar.gz
 
 fi
+cd /home/wangs1/CorruptionBenchCV
 
 python main.py --model resnet18  --dataset ImageNet_C --image_size 224 --data_path /local/swang/
  

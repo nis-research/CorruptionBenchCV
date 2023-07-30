@@ -4,3 +4,4 @@ argparse
 timm
 scipy
 pandas
+pytorch-lightning
