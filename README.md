@@ -26,7 +26,11 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
    pip install -r requirements.txt
    ```
   
-  
+  * Clone this repository
+  ```
+  git clone https://github.com/nis-research/CorruptionBenchCV.git
+  cd CorruptionBenchCV
+  ```
 2. Evaluating pre-trained models from [timm](https://huggingface.co/models?sort=downloads&search=bit)
  
  ``` 
