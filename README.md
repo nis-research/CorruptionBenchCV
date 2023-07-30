@@ -34,7 +34,7 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
 2. Evaluating pre-trained models from [timm](https://huggingface.co/models?sort=downloads&search=bit)
  
  ``` 
- python main.py --model resnet18  --dataset ImageNet_C_bar --image_size 224 --data_path /whereYouStoreImageNet_C_bar/
+ python main.py --model resnet18  --dataset ImageNet_C_bar --image_size 224 --data_path /local/
  ```
 
 Output: a csv file with the following structure, recording the accuracy and ECE per corruption per severity. The overal results (e.g. clean accuracy, robust accuracy, relative robustness, relative mCE, mCE, mFP, and mT5D) will be printed. You can also use the csv file to compute the values of the above metrics.

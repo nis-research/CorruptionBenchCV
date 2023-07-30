@@ -14,19 +14,31 @@ module load anaconda3/2022.05
 
 echo $SLURM_NODELIST
 
-cd nn-frequency-shortcuts
-source activate debugenv
+cd  CorruptionBenchCV
+source activate virtualenv
 
+if [ ! -d "/local/swang/ImageNet_C/brightness/" ]
+then
+cd /local/
+mkdir swang/
+cd swang/
+cp -r /deepstore/datasets/dmb/ComputerVision/nis-data/shunxin/ImageNet_C/  .
+fi
 
+if [ ! -d "/local/swang/ImageNet/val/" ]
+then
+cd /local/
+mkdir swang/
+cd swang/
 
-# python -u Evaluation/verify_mask_imgn.py  --backbone_model resnet18  --m_path  ./DFMs/resnet18_DFM_1   --model_path results/imagenet10/resnet18/version_0/checkpoints/last.ckpt  
+mkdir ImageNet/
+cd ImageNet/
+cp -r /deepstore/datasets/dmb/ComputerVision/nis-data/shunxin/ImageNet/imagenet-val.tar.gz  .
+tar -xvf imagenet-val.tar.gz -o val
+rm imagenet-val.tar.gz
 
-# python -u Evaluation/test_rank.py  --backbone_model resnet18 --model_path results/imagenet10/resnet18/version_0/checkpoints/last.ckpt     --patch_size  7  
+fi
 
-
-python -u Evaluation/visualize_DFM.py --DFMs resnet18_DFM_1
-# python -u train.py --backbone_model resnet18  --lr 0.01 --dataset imagenet10   --save_dir results/imagenet10/  --image_size 224     --num_class 10            
-# python -u train.py --backbone_model alex  --lr 0.01 --save_dir results/syn1/  --dataset synthetic   --num_class 4  --special _complex_special_1_par 
-# python -u Evaluation/compute_ADCS.py
-
+python main.py --model resnet18  --dataset ImageNet_C --image_size 224 --data_path /local/swang/
+ 
 conda deactivate

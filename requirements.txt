@@ -1,9 +1,6 @@
-cv2
-torch
-torchvision
+opencv-python
 Pillow
 argparse
 timm
 scipy
-os
 pandas
