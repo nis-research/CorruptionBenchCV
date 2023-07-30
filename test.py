@@ -1,4 +1,3 @@
-from datasets.CIFAR_C import CIFAR10_C
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 import torch
@@ -17,14 +16,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def get_corruption_list(dataset):
 
-    if dataset == 'cifar':
-    
-        Corruptions_list = ['brightness','contrast','defocus_blur','elastic_transform',
-                'fog','frost','gaussian_blur','gaussian_noise','glass_blur',
-                  'impulse_noise','jpeg_compression','motion_blur','pixelate','saturate',
-                  'shot_noise','snow','spatter','speckle_noise','zoom_blur']
-    elif dataset == 'ImageNet_C':
-    
+    if dataset == 'ImageNet_C':
         Corruptions_list = ['brightness','contrast','defocus_blur','elastic_transform',
                 'fog','frost','gaussian_noise','glass_blur',
                   'impulse_noise','jpeg_compression','motion_blur','pixelate',
@@ -49,50 +41,8 @@ def test_corruption_severity(dataset, image_size,model_test, corruption,data_pat
 
     total = 0.0
     correct_test = 0.0
-    correct_baseline = 0.0
- 
-
-    if dataset == 'cifar':
     
-        mean = [0.491400, 0.482158, 0.446531]
-        std = [0.247032, 0.243485, 0.261588]
-
-        transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize(mean, std)])
-
-        
-        testset = CIFAR10_C(data_path,corruption,transform=transform)
-        test_loader = torch.utils.data.DataLoader(dataset=testset,
-                                        batch_size=100, 
-                                        shuffle=False)
-        
-        
-        
-        for data in test_loader:
-            images, labels = data[0].to(device), data[1].to(device)
-            
-            _,outputs = model_test(images.float())
-            _, predicted = torch.max(outputs.data,1)
-
-
-
-            total += labels.size(0)
-            correct_test += (predicted == labels).sum().item()
-            correct_baseline += (predicted_baseline == labels).sum().item()
-
-            if total == 10000  :
-
-                acc_test = float(100*correct_test/total)
-                corruption_severity_test.append(acc_test)
-                
-
-                correct_test = 0.0
-                total = 0.0
-
-      
-
-   
-
-    elif dataset in ['ImageNet_C','ImageNet_C_bar','ImageNet_3DCC']:
+    if  dataset in ['ImageNet_C','ImageNet_C_bar','ImageNet_3DCC']:
         mean = [0.479838, 0.470448, 0.429404]
         std = [0.258143, 0.252662, 0.272406]
         
@@ -130,49 +80,8 @@ def test_ece_severity(dataset, image_size,model, corruption,data_path, num_sever
     total = 0.0
     E = 0
     B = 0
-   
-     
 
-    if dataset == 'cifar':
-    
-        mean = [0.491400, 0.482158, 0.446531]
-        std = [0.247032, 0.243485, 0.261588]
-
-        transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize(mean, std)])
-
-        
-        testset = CIFAR10_C(data_path,corruption,transform=transform)
-        test_loader = torch.utils.data.DataLoader(dataset=testset,
-                                        batch_size=100, 
-                                        shuffle=False)
-        
-        for data in test_loader:
-            images, labels = data[0].to(device), data[1].to(device)
-            
-            _,outputs = model(images.float())
-            
-            py_test = (outputs.cpu().detach().numpy())
-            ytest = (labels.cpu().detach().numpy())
-
-
-            total += labels.size(0)
-
-            ece_test, Bm_test = ece_score(py_test,ytest)
-            E += ece_test
-            B += Bm_test
-            
-          
-
-            if total == 10000  :
-                ece = ECE(E,B)
-                ece_severity_test.append(ece)
-
-                total = 0.0
-                E = 0
-                B = 0
-               
-
-    elif dataset in ['ImageNet_C','ImageNet_C_bar','ImageNet_3DCC']:
+    if dataset in ['ImageNet_C','ImageNet_C_bar','ImageNet_3DCC']:
         mean = [0.479838, 0.470448, 0.429404]
         std = [0.258143, 0.252662, 0.272406]
         transform=transforms.Compose([transforms.Resize((image_size,image_size)),
@@ -214,8 +123,6 @@ def test_ece_severity(dataset, image_size,model, corruption,data_path, num_sever
 
 
 def test_corruption(dataset, image_size,model_test,data_path):
-    acc_all_corruptions = []
-    ce_all_corruptions = []
     severity=5
 
     corruption_list = get_corruption_list(dataset)
@@ -225,35 +132,14 @@ def test_corruption(dataset, image_size,model_test,data_path):
     for corruption in corruption_list:
         acc_corruption_severity_test= test_corruption_severity(dataset, image_size,model_test, corruption,data_path)
         ece_severity_test = test_ece_severity(dataset, image_size,model_test, corruption,data_path)
-        acc_corruption =  sum(acc_corruption_severity_test)   
-        ce_corruption_test = [100 - r for r in acc_corruption_severity_test] 
         corruption_i = corruption_list.index(corruption)
 
-        # print(corruption+': (from severity  1 to 5)')        
-        # print('Accuracy per severity: test model' + str(acc_corruption_severity_test))
-        # print('Accuracy per severity: basleine' +str(acc_corruption_severity_baseline))
-   
-        # print('ECE per severity: test model' + str(ece_severity_test))
-        # print('ECE per severity: basleine' +str(ece_severity_baseline))
+
 
         for s in range(severity):
             d.loc[corruption_i,'Acc_s'+str(s+1)] = acc_corruption_severity_test[s]
             d.loc[corruption_i,'ECE_s'+str(s+1)] = ece_severity_test[s]
-        # CE_corruption = CE(ce_corruption_test,ce_corruption_baseline)
-        # ce_all_corruptions.append(CE_corruption)
-        
-
-        # acc_all_corruptions.append(acc_corruption/5.0)
-        # acc_all_corruptions_baseline.append(sum(acc_corruption_severity_baseline)/5.0)
-    # avg_acc = sum(acc_all_corruptions)/len(acc_all_corruptions)
-    # avg_acc_baseline = sum(acc_all_corruptions_baseline)/len(acc_all_corruptions_baseline)
-
-    # print('Average accuracy test: %.2f' %avg_acc)
-    # print('Average accuracy baseline: %.2f' %avg_acc_baseline)
-    # relR = RelativeRobustness(avg_acc,avg_acc_baseline)
-    # print('Relative Robustness %.3f' %relR)
-    # mCE_final = mCE(ce_all_corruptions)
-    # print('mCE: %.2f' % mCE_final)
+       
     print(d)
     
     return d
@@ -358,12 +244,6 @@ def test_imagenet_p(model,perturbation,difficulty,data_path):
 
 
     ranks = np.asarray(ranks)
- 
-    # print('Computing Metrics\n')
-
-    # print('Flipping Prob\t{:.5f}'.format(flip_prob(predictions)))
-    # print('Top5 Distance\t{:.5f}'.format(ranking_dist(ranks, mode='top5')))
-    # print('Zipf Distance\t{:.5f}'.format(ranking_dist(ranks, mode='zipf')))
 
     return flip_prob(predictions),ranking_dist(ranks, mode='top5') # ,ranking_dist(ranks, mode='zipf')
 
@@ -388,15 +268,6 @@ def test_perturbations(model_test,difficulty,dataset, data_path):
         FPs.append(FP_test)#/FP_baseline) 
         T5Ds.append(T5D_test)#/T5D_baseline)
 
-        
-
-       
-    # mFP = sum(FPs)/len(FPs)*100.0
-    # mT5D = sum(T5Ds)/len(T5Ds)*100.0
-
-    # print('mFP: %.2f' %mFP)
-    # print('mT5D: %.2f' %mT5D)
-  
     print(d)
     
     return d

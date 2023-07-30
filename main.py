@@ -6,8 +6,7 @@ import os
 import timm
 
 #Add here necessary libraries to load your custom model
-from train import Model
-# from augmax.models.imagenet.resnet_DuBIN import ResNet18_DuBIN
+
 
 
 
