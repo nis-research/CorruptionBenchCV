@@ -10,10 +10,18 @@ This is the benchmark framework used in the survey paper [The Robustness of Comp
 
  ---
  ### Quick start
-1. Before running:
+1. Installation
+
  
-  * Download the datasets  
-  * Install packages
+  * Download the datasets (ImageNet-1k, [ImageNet-C](https://github.com/hendrycks/robustness), [ImageNet-C-bar](https://github.com/facebookresearch/augmentation-corruption), [ImageNet-P](https://github.com/hendrycks/robustness), [ImageNet-3DCC](https://github.com/EPFL-VILAB/3DCommonCorruptions))  
+  * Python 3.9.12, cuda-11.7, cuda-11.x_cudnn-8.6 
+	* you can create a virtual environment with conda and activate the environment before the next step 
+	```
+	 conda create -n virtualenv  python=3.9 anaconda
+ 	 source activate virtualenv
+ 	 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
+	```
+  * Install other packages
    ```
    pip install -r requirements.txt
    ```
