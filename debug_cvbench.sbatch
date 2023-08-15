@@ -16,7 +16,7 @@ module load anaconda3/2022.05
 echo $SLURM_NODELIST
 
 cd  CorruptionBenchCV
-source activate virtualenv
+source activate debugenv
 
 if [ ! -d "/local/swang/ImageNet_C/brightness/" ]
 then
