@@ -52,3 +52,18 @@ This is the benchmark framework used in the survey paper [Larger is not Better: 
 
 3. Visualizing robustness among different backbones --> [Overall robustness](make_plots/plot_benchmark_overall.ipynb),  [Per corruption](make_plots/plot_benchmark_per_corruption.ipynb)
   
+## Citation
+
+```
+@misc{wang2023larger,
+      title={Larger is not Better: A Survey on the Robustness of Computer Vision Models against Common Corruptions}, 
+      author={Shunxin Wang and Raymond Veldhuis and Christoph Brune and Nicola Strisciuglio},
+      year={2023},
+      eprint={2305.06024},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}={2023}
+```
+
+### Acknowledgement
+We would like to thank [Dan Hendrycks and his coauthors](https://github.com/hendrycks/robustness) for their codes implementing the evaluation metrics for ImageNet-P.
