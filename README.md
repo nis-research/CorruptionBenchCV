@@ -50,5 +50,5 @@ This is the benchmark framework used in the survey paper [Larger is not Better: 
  *  Change this parameter to select the pretrained model available in [timm](https://huggingface.co/models?sort=downloads&search=bit)  '--model'
  *  For testing on all benchmark datasets, it has high requirement of storage. Thus, we suggest testing on benchmark datasets one by one. 
 
-3. Visualizing robustness among different backbones --> [Overall robustness](plot_benchmark_overall.ipynb),  [Per corruption](plot_benchmark_per_corruption.ipynb)
+3. Visualizing robustness among different backbones --> [Overall robustness](make_plots/plot_benchmark_overall.ipynb),  [Per corruption](make_plots/plot_benchmark_per_corruption.ipynb)
   
