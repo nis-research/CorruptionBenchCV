@@ -7,8 +7,7 @@ import pandas as pd
 
 from metric import CE, mCE, RelativeRobustness,ece_score,ECE, rCE, mrCE
 from main import bs
-import sys
-sys.path.append("/home/wangs1/benchmark/code")
+
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -39,22 +38,24 @@ def get_corruption_list(dataset):
 def test_corruption_severity(dataset, image_size,model_test, corruption,data_path, num_severity=5):
     corruption_severity_test = []
 
-    total = 0.0
-    correct_test = 0.0
+    
     
     if  dataset in ['ImageNet_C','ImageNet_C_bar','ImageNet_3DCC']:
-        mean = [0.479838, 0.470448, 0.429404]
-        std = [0.258143, 0.252662, 0.272406]
+        mean = [0.485, 0.456, 0.406]
+        std = [0.229, 0.224, 0.225]
         
-        transform=transforms.Compose([transforms.Resize((256,256)),
-                                      transforms.CenterCrop((image_size,image_size)),
+        # transform=transforms.Compose([transforms.Resize((256,256)),
+        #                               transforms.CenterCrop((image_size,image_size)),
+        #                                transforms.ToTensor(),transforms.Normalize(mean,std)])
+        transform=transforms.Compose([transforms.CenterCrop((image_size,image_size)),                    
                                        transforms.ToTensor(),transforms.Normalize(mean,std)])
    
     
         for severity in range(1,num_severity+1):
             data_test =  ImageFolder(data_path+dataset+'/'+corruption+'/'+str(severity),transform=transform)
             test_loader = torch.utils.data.DataLoader(data_test, batch_size= bs, shuffle=False,num_workers=2)
-
+            total = 0.0
+            correct_test = 0.0
             for data in test_loader:
                 images, labels = data[0].to(device), data[1].to(device)            
                 outputs = model_test(images.float())
@@ -67,9 +68,6 @@ def test_corruption_severity(dataset, image_size,model_test, corruption,data_pat
             acc_test = float(100*correct_test/total)
             corruption_severity_test.append(acc_test)
 
-          
-            correct_test = 0.0
-
     return corruption_severity_test 
                     
 
@@ -77,14 +75,12 @@ def test_corruption_severity(dataset, image_size,model_test, corruption,data_pat
 def test_ece_severity(dataset, image_size,model, corruption,data_path, num_severity=5):
 
     ece_severity_test = []
-    total = 0.0
-    E = 0
-    B = 0
+    
 
     if dataset in ['ImageNet_C','ImageNet_C_bar','ImageNet_3DCC']:
-        mean = [0.479838, 0.470448, 0.429404]
-        std = [0.258143, 0.252662, 0.272406]
-        transform=transforms.Compose([transforms.Resize((image_size,image_size)),
+        mean = [0.485, 0.456, 0.406]
+        std = [0.229, 0.224, 0.225]
+        transform=transforms.Compose([transforms.CenterCrop((image_size,image_size)),
                                        transforms.ToTensor(),transforms.Normalize(mean,std)])
         
         # transform=transforms.Compose([transforms.Resize(256), transforms.CenterCrop(224),
@@ -92,7 +88,10 @@ def test_ece_severity(dataset, image_size,model, corruption,data_path, num_sever
         for severity in range(1,num_severity+1):
             data_test =  ImageFolder(data_path+dataset+'/'+corruption+'/'+str(severity),transform=transform)
             test_loader = torch.utils.data.DataLoader(data_test, batch_size= bs, shuffle=False,num_workers=8)
-
+            
+            total = 0.0
+            E = 0
+            B = 0
             for data in test_loader:
                 images, labels = data[0].to(device), data[1].to(device)            
                 outputs = model(images.float())
@@ -100,22 +99,15 @@ def test_ece_severity(dataset, image_size,model, corruption,data_path, num_sever
                 py_test = (outputs.cpu().detach().numpy())
                 ytest = (labels.cpu().detach().numpy())
 
-    
-
                 total += labels.size(0)
-                E = 0
-                B = 0
         
                 ece_test, Bm_test = ece_score(py_test,ytest)
                 E += ece_test
                 B += Bm_test
-                py_test = []
-                ytest = []
 
             ece = ECE(E,B)
             ece_severity_test.append(ece)
-            py_test = []
-            ytest = []
+
 
     return  ece_severity_test
 
@@ -274,12 +266,14 @@ def test_perturbations(model_test,difficulty,dataset, data_path):
 
 
 def test_clean(model_test, data_path):
-    mean = [0.479838, 0.470448, 0.429404]
-    std = [0.258143, 0.252662, 0.272406]
+    mean = [0.485, 0.456, 0.406]
+    std = [0.229, 0.224, 0.225]
         
     transform=transforms.Compose([transforms.Resize((256,256)),
                                     transforms.CenterCrop((224,224)),
                                     transforms.ToTensor(),transforms.Normalize(mean,std)])
+    # transform=transforms.Compose([transforms.Resize((224,224)),                    
+    #                                    transforms.ToTensor(),transforms.Normalize(mean,std)])
 
     data_test =  ImageFolder(data_path+'ImageNet/val/',transform=transform)
     test_loader = torch.utils.data.DataLoader(data_test, batch_size= bs, shuffle=False,num_workers=2)
